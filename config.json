@@ -1,0 +1,33 @@
+{
+  "_comment": "מילון נושאים: ממפה את עמודות הנתונים לתצוגה בעברית עם קטגוריות. מה שלא נמצא כאן - לא יוצג בפילוח. ערכים שנחשבים 'פנייה פעילה בנושא': 'נדרש' ו'הגיש כבר'.",
+  "active_values": ["נדרש", "הגיש כבר"],
+  "topics": {
+    "has_children": { "label": "ילדים", "category": "משפחה" },
+    "summer_camp": { "label": "קייטנות קיץ", "category": "משפחה" },
+    "birth_grant": { "label": "מענק לידה", "category": "משפחה" },
+    "spouse_student": { "label": "בן/בת זוג סטודנט", "category": "משפחה" },
+    "private_lessons": { "label": "שיעורים פרטיים", "category": "משפחה" },
+    "study_grants": { "label": "מענקי לימודים", "category": "משפחה" },
+    "spouse_employment_status": { "label": "תעסוקת בן/בת זוג", "category": "תעסוקה" },
+    "income_loss": { "label": "אובדן הכנסה", "category": "תעסוקה" },
+    "pet": { "label": "טיפול בחיות מחמד", "category": "משפחה" },
+    "resilience_couples": { "label": "טיפולים זוגיים", "category": "רגשי" },
+    "repairs": { "label": "תיקונים בבית", "category": "רווחה" },
+    "vacation_compensation": { "label": "פיצוי חופשה", "category": "רווחה" },
+    "flight_compensation": { "label": "פיצוי טיסות", "category": "רווחה" },
+    "income_tax": { "label": "מס הכנסה", "category": "זכויות" },
+    "legal_advice": { "label": "ייעוץ משפטי", "category": "זכויות" },
+    "nonprofit_assistance": { "label": "סיוע עמותות", "category": "זכויות" },
+    "fighter": { "label": "פייטר", "category": "רווחה" },
+    "vacation_break": { "label": "שוברי נופש", "category": "רווחה" },
+    "discharged": { "label": "שחרור", "category": "שירות" }
+  },
+  "status_mapping": {
+    "טופלה": "טופל",
+    "חייל לא זמין": "לא ענה",
+    "אין מספר טלפון": "לא ענה",
+    "חייל ביקש שיחזרו אליו": "ממתין",
+    "ממתין לטיפול": "ממתין",
+    "נדרש סיוע של עורך דין": "ממתין"
+  }
+}
