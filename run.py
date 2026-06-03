@@ -70,7 +70,7 @@ def discover_files(folder):
     if not folder.is_dir():
         raise FileNotFoundError(f"תיקייה לא קיימת: {folder}")
     
-    pattern = re.compile(r"(\d+)_export", re.IGNORECASE)
+    pattern = re.compile(r"^(\d+).*?_export", re.IGNORECASE)
     files = []
     for f in folder.glob("*.xlsx"):
         if f.name.startswith("~$"):  # קבצי lock של Excel
