@@ -6,10 +6,11 @@ Upload Excel files, pick a date, get the same HTML report you'd get from the CLI
 
 Run locally:  streamlit run app.py
 Deploy:       push to a public GitHub repo, connect at share.streamlit.io
+Production: https://sagi-sdaily-reports-tool.streamlit.app/
 """
 
 import tempfile
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -21,7 +22,7 @@ from run import (
     compute_topic_breakdown,
     compute_unit_summary,
     discover_files,
-    filter_by_date,
+    filter_by_date_range,
     load_battalion,
     load_config,
     render_html,
@@ -51,15 +52,25 @@ st.markdown(
 )
 
 st.title("דוח פעילות יומית — מרכז העורף")
-st.caption("העלה את קבצי האקסל של היום, בחר תאריך, וצור את הדוח HTML להורדה ולשיתוף")
+st.caption("העלה את קבצי האקסל, בחר טווח תאריכים, וצור את הדוח HTML להורדה ולשיתוף")
 
 # ============ קלט ============
 
-target_date = st.date_input(
-    "תאריך הדוח",
-    value=date.today(),
+today = date.today()
+start_date = st.date_input(
+    "מתאריך",
+    value=today - timedelta(days=6),
     format="DD/MM/YYYY",
 )
+end_date = st.date_input(
+    "עד תאריך",
+    value=today,
+    format="DD/MM/YYYY",
+)
+
+if end_date < start_date:
+    st.error("התאריך הסופי לא יכול להיות מוקדם מהתאריך ההתחלתי. תקן את הטווח כדי להמשיך.")
+    st.stop()
 
 uploaded = st.file_uploader(
     "קבצי גדודים (xlsx) — הפורמט המצופה: <מספר>_export*.xlsx",
@@ -114,11 +125,11 @@ with tempfile.TemporaryDirectory() as tmpdir:
             dfs.append(df)
 
     all_data = pd.concat(dfs, ignore_index=True)
-    day_data = filter_by_date(all_data, target_date)
+    day_data = filter_by_date_range(all_data, start_date, end_date)
 
     if len(day_data) == 0:
         st.warning(
-            f"לא נמצאו פניות בתאריך {target_date.isoformat()}. "
+            f"לא נמצאו פניות בין {start_date.isoformat()} ל-{end_date.isoformat()}. "
             "הדוח ייוצר עם נתונים ריקים."
         )
 
@@ -134,7 +145,7 @@ with tempfile.TemporaryDirectory() as tmpdir:
 
     with st.spinner("מייצר HTML..."):
         html = render_html(
-            target_date,
+            (start_date, end_date),
             unit_summary,
             staff_breakdown,
             topic_data,
@@ -146,7 +157,12 @@ with tempfile.TemporaryDirectory() as tmpdir:
 
 # שמירת הדוח לדיסק תחת reports/ — בדיוק כמו ה-CLI (run.py)
 OUTPUT_DIR.mkdir(exist_ok=True)
-out_path = OUTPUT_DIR / f"report_{target_date.isoformat()}.html"
+report_name = (
+    f"report_{start_date.isoformat()}_to_{end_date.isoformat()}.html"
+    if start_date != end_date
+    else f"report_{start_date.isoformat()}.html"
+)
+out_path = OUTPUT_DIR / report_name
 out_path.write_text(html, encoding="utf-8")
 
 st.success(
@@ -158,7 +174,7 @@ st.caption(f"נשמר אוטומטית: `{out_path}`")
 st.download_button(
     label="הורד את הדוח (HTML)",
     data=html.encode("utf-8"),
-    file_name=f"report_{target_date.isoformat()}.html",
+    file_name=report_name,
     mime="text/html",
     use_container_width=True,
 )

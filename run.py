@@ -114,6 +114,10 @@ def filter_by_date(df, target_date):
     return df[df["_date"] == target_date].copy()
 
 
+def filter_by_date_range(df, start_date, end_date):
+    return df[(df["_date"] >= start_date) & (df["_date"] <= end_date)].copy()
+
+
 def compute_staff_breakdown(df, status_mapping):
     """מחשב פילוח לפי איש צוות"""
     df = df.copy()
@@ -370,7 +374,7 @@ def build_status_legend(status_mapping):
     return "".join(items)
 
 
-def render_html(target_date, unit_summary, staff_breakdown, topic_data, total_calls, status_mapping):
+def render_html(report_period, unit_summary, staff_breakdown, topic_data, total_calls, status_mapping):
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         template = f.read()
     
@@ -471,10 +475,27 @@ def render_html(target_date, unit_summary, staff_breakdown, topic_data, total_ca
     else:
         matrix_html = '<div class="empty">אין נתונים להצגת מטריצה</div>'
     
+    # הסתגלות לתאריך בודד או טווח תאריכים
+    if isinstance(report_period, tuple):
+        start_date, end_date = report_period
+    else:
+        start_date = end_date = report_period
+
+    title_date = (
+        format_hebrew_date(start_date)
+        if start_date == end_date
+        else f"{format_hebrew_date(start_date)} עד {format_hebrew_date(end_date)}"
+    )
+    iso_date = (
+        start_date.isoformat()
+        if start_date == end_date
+        else f"{start_date.isoformat()}_to_{end_date.isoformat()}"
+    )
+
     # החלפות בתבנית
     html = template
-    html = html.replace("{{TITLE_DATE}}", format_hebrew_date(target_date))
-    html = html.replace("{{ISO_DATE}}", target_date.isoformat())
+    html = html.replace("{{TITLE_DATE}}", title_date)
+    html = html.replace("{{ISO_DATE}}", iso_date)
     html = html.replace("{{GENERATED_AT}}", datetime.now().strftime("%d/%m/%Y %H:%M"))
     units_list = " · ".join(u["unit"] for u in unit_summary) if unit_summary else "—"
     html = html.replace("{{UNITS_LIST}}", units_list)
