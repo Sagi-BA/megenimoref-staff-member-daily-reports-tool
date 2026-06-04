@@ -8,15 +8,16 @@
     python run.py <תיקייה> --date 2026-05-27 --out custom.html
 
 מבנה תיקיית הקלט:
-    הסקריפט סורק את התיקייה ומחפש קבצים שמכילים את הדפוס: <מספר>_export*.xlsx
-    לדוגמה: 240_export.xlsx, 241_export_v2.xlsx
+    הסקריפט סורק את התיקייה ומחפש קבצים בפורמט:
+        <מספר>_export*.xlsx         (לדוגמה: 240_export.xlsx, 241_export_v2.xlsx)
+        <שם-עברי>_export*.xlsx      (לדוגמה: מפקדה_מחוז_export.xlsx)
 """
 
 import argparse
 import json
 import re
 import sys
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from pathlib import Path
 from collections import Counter, defaultdict
 import pandas as pd
@@ -62,15 +63,36 @@ def parse_date(val):
         return None
 
 
+def format_unit_label(unit):
+    """תווית תצוגה ליחידה.
+
+    - מספר (כמו "240")        → "גדוד 240"
+    - שם בעברית ("מפקדה_מחוז") → "מפקדה מחוז"  (אנדרסקור→רווח)
+    """
+    s = str(unit)
+    if not s:
+        return s
+    return f"גדוד {s}" if s[0].isdigit() else s.replace("_", " ")
+
+
 # ============== קריאת הקבצים ==============
 
 def discover_files(folder):
-    """מוצא את כל הקבצים בתיקייה ומחלץ מספר גדוד משם הקובץ"""
+    """מוצא את כל הקבצים בתיקייה ומחלץ שם יחידה משם הקובץ.
+
+    תומך בשני פורמטים:
+    - מספר גדוד:  240_export.xlsx          → "240"
+    - שם בעברית:  מפקדה_מחוז_export.xlsx   → "מפקדה_מחוז"
+    """
     folder = Path(folder)
     if not folder.is_dir():
         raise FileNotFoundError(f"תיקייה לא קיימת: {folder}")
-    
-    pattern = re.compile(r"^(\d+).*?_export", re.IGNORECASE)
+
+    # ֐-׿ = טווח Unicode של אותיות עבריות
+    pattern = re.compile(
+        r"^(\d+|[֐-׿]+(?:_[֐-׿]+)*).*?_export",
+        re.IGNORECASE,
+    )
     files = []
     for f in folder.glob("*.xlsx"):
         if f.name.startswith("~$"):  # קבצי lock של Excel
@@ -78,12 +100,13 @@ def discover_files(folder):
         m = pattern.search(f.name)
         if m:
             files.append((m.group(1), f))
-    
+
     if not files:
         raise FileNotFoundError(
-            f"לא נמצאו קבצים בפורמט <מספר>_export*.xlsx בתיקייה: {folder}"
+            f"לא נמצאו קבצים בפורמט <מספר>_export*.xlsx או <שם-עברי>_export*.xlsx "
+            f"בתיקייה: {folder}"
         )
-    
+
     return sorted(files, key=lambda x: x[0])
 
 
@@ -190,7 +213,7 @@ def compute_unit_summary(df, status_mapping):
     """סיכום לפי גדוד"""
     df = df.copy()
     df["_status_norm"] = df["סטטוס פנייה"].map(status_mapping).fillna("אחר")
-    
+
     result = []
     for unit, group in df.groupby("_unit"):
         status_counts = group["_status_norm"].value_counts().to_dict()
@@ -203,6 +226,62 @@ def compute_unit_summary(df, status_mapping):
             "other": status_counts.get("אחר", 0),
         })
     return sorted(result, key=lambda r: r["unit"])
+
+
+HEBREW_MONTHS = [
+    "ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני",
+    "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר",
+]
+
+
+def compute_time_series(df, start, end):
+    """מחשב פילוח פניות לאורך הזמן.
+
+    בוחר אוטומטית את גודל הדלי:
+        טווח עד 14 ימים   → דלי יומי
+        טווח עד 120 ימים  → דלי שבועי (החל מיום ראשון)
+        טווח מעל 120 ימים → דלי חודשי
+
+    מחזיר (buckets, bucket_kind) כאשר buckets = רשימת (label, count)
+    ו-bucket_kind ∈ {"day", "week", "month"}.
+    """
+    days_span = (end - start).days + 1
+    dates = [d for d in df["_date"].tolist() if d is not None]
+
+    if days_span <= 14:
+        counts = Counter(dates)
+        out = []
+        cur = start
+        while cur <= end:
+            out.append((cur.strftime("%d/%m"), counts.get(cur, 0)))
+            cur += timedelta(days=1)
+        return out, "day"
+
+    if days_span <= 120:
+        # יום ראשון = תחילת השבוע (בישראל). weekday(): שני=0..ראשון=6
+        def week_start_of(d):
+            return d - timedelta(days=(d.weekday() + 1) % 7)
+
+        counts = Counter(week_start_of(d) for d in dates)
+        out = []
+        cur = week_start_of(start)
+        while cur <= end:
+            week_end = cur + timedelta(days=6)
+            label = f"{cur.strftime('%d/%m')}–{week_end.strftime('%d/%m')}"
+            out.append((label, counts.get(cur, 0)))
+            cur += timedelta(days=7)
+        return out, "week"
+
+    counts = Counter((d.year, d.month) for d in dates)
+    out = []
+    y, m = start.year, start.month
+    while (y, m) <= (end.year, end.month):
+        label = f"{HEBREW_MONTHS[m - 1]} {y}"
+        out.append((label, counts.get((y, m), 0)))
+        m += 1
+        if m > 12:
+            m, y = 1, y + 1
+    return out, "month"
 
 
 # ============== ייצור ה-HTML ==============
@@ -307,14 +386,14 @@ def build_topic_unit_table(units, by_topic_unit):
     )
 
     header_cells = "".join(
-        f'<th class="num">גדוד {u}</th>' for u in units
+        f'<th class="num">{format_unit_label(u)}</th>' for u in units
     )
 
     body_rows = []
     for label, per_unit in ordered:
         total = sum(per_unit.values())
         cells = "".join(
-            f'<td class="num" data-label="גדוד {u}">'
+            f'<td class="num" data-label="{format_unit_label(u)}">'
             f'{per_unit.get(u, 0) if per_unit.get(u, 0) > 0 else "—"}</td>'
             for u in units
         )
@@ -337,6 +416,46 @@ def build_topic_unit_table(units, by_topic_unit):
       </thead>
       <tbody>{''.join(body_rows)}</tbody>
     </table>"""
+
+
+def build_time_series_section(df, start, end):
+    """בונה את כל הסקשן של 'פניות לאורך זמן'.
+
+    מוחזר '' אם הטווח קטן מ-8 ימים — אז ציר זמן לא מוסיף ערך,
+    והקופסה הקיימת של KPI כבר מציגה את הסה"כ.
+    """
+    if (end - start).days + 1 <= 7:
+        return ""
+
+    series, kind = compute_time_series(df, start, end)
+    if not series or all(c == 0 for _, c in series):
+        return ""
+
+    max_val = max(c for _, c in series) or 1
+    bars = []
+    for label, count in series:
+        pct = (count / max_val) * 100
+        bars.append(f"""
+        <div class="bar-row">
+          <div class="bar-label">{label}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:{pct:.2f}%"></div></div>
+          <div class="bar-value">{count}</div>
+        </div>""")
+
+    subtitle_map = {
+        "day":   "פניות בכל יום בטווח הדוח",
+        "week":  "פניות בכל שבוע (יום ראשון–שבת)",
+        "month": "פניות בכל חודש",
+    }
+    return f"""
+  <section>
+    <div class="section-header">
+      <span class="section-number">§ 06</span>
+      <h2>פניות לאורך זמן</h2>
+    </div>
+    <p class="section-subtitle">{subtitle_map[kind]}</p>
+    <div class="topic-bars">{''.join(bars)}</div>
+  </section>"""
 
 
 def build_status_legend(status_mapping):
@@ -374,7 +493,7 @@ def build_status_legend(status_mapping):
     return "".join(items)
 
 
-def render_html(report_period, unit_summary, staff_breakdown, topic_data, total_calls, status_mapping):
+def render_html(report_period, unit_summary, staff_breakdown, topic_data, total_calls, status_mapping, day_data=None):
     with open(TEMPLATE_PATH, encoding="utf-8") as f:
         template = f.read()
     
@@ -390,7 +509,7 @@ def render_html(report_period, unit_summary, staff_breakdown, topic_data, total_
         rate = (u["handled"] / u["total"] * 100) if u["total"] else 0
         unit_rows += f"""
         <tr>
-          <td class="unit-name" data-label="יחידה">גדוד {u['unit']}</td>
+          <td class="unit-name" data-label="יחידה">{format_unit_label(u['unit'])}</td>
           <td class="num" data-label="סה&quot;כ">{u['total']}</td>
           <td class="num good" data-label="טופל">{u['handled']}</td>
           <td class="num bad" data-label="לא ענה">{u['no_answer']}</td>
@@ -522,6 +641,12 @@ def render_html(report_period, unit_summary, staff_breakdown, topic_data, total_
             topic_data.get("by_topic_unit", {})
         )
     )
+    time_series_html = (
+        build_time_series_section(day_data, start_date, end_date)
+        if day_data is not None and len(day_data) > 0
+        else ""
+    )
+    html = html.replace("{{TIME_SERIES_SECTION}}", time_series_html)
 
     return html
 
@@ -557,7 +682,7 @@ def main():
     for unit_id, filepath in files:
         df = load_battalion(unit_id, filepath)
         dfs.append(df)
-        print(f"  גדוד {unit_id}: {len(df)} רשומות")
+        print(f"  {format_unit_label(unit_id)}: {len(df)} רשומות")
     
     all_data = pd.concat(dfs, ignore_index=True)
     
@@ -578,7 +703,7 @@ def main():
     # ייצור HTML
     html = render_html(
         target, unit_summary, staff_breakdown, topic_data, len(day_data),
-        config["status_mapping"]
+        config["status_mapping"], day_data=day_data,
     )
     
     # שמירה

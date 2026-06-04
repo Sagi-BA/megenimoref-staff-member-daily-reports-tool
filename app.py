@@ -73,10 +73,10 @@ if end_date < start_date:
     st.stop()
 
 uploaded = st.file_uploader(
-    "קבצי גדודים (xlsx) — הפורמט המצופה: <מספר>_export*.xlsx",
+    "קבצי גדודים (xlsx) — הפורמט המצופה: <מספר או שם בעברית>_export*.xlsx",
     type=["xlsx"],
     accept_multiple_files=True,
-    help="לדוגמה: 240_export.xlsx, 241_export.xlsx. אפשר להעלות כמה שצריך בבת אחת.",
+    help="לדוגמה: 240_export.xlsx, מפקדה_מחוז_export.xlsx. אפשר להעלות כמה שצריך בבת אחת.",
 )
 
 if not uploaded:
@@ -151,6 +151,7 @@ with tempfile.TemporaryDirectory() as tmpdir:
             topic_data,
             len(day_data),
             config["status_mapping"],
+            day_data=day_data,
         )
 
 # ============ פלט ============

@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דוח פעילות יומית - 2026-01-01_to_2026-06-04</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0f1c;
+    --ink-soft: #2a3142;
+    --paper: #faf8f3;
+    --paper-warm: #f3efe6;
+    --rule: #1a1f2e;
+    --rule-soft: #c8c0ad;
+    --accent: #8b1e1e;
+    --good: #2c5f2d;
+    --bad: #8b1e1e;
+    --neutral: #8a6d1f;
+    --muted: #6b6557;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Alef', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 48px 80px;
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(0,0,0,0.012) 0%, transparent 50%),
+      radial-gradient(circle at 85% 75%, rgba(0,0,0,0.012) 0%, transparent 50%);
+  }
+
+  /* === HEADER === */
+  .masthead {
+    border-bottom: 3px double var(--rule);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+  }
+  .masthead-left { flex: 1; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    direction: ltr;
+    text-align: right;
+  }
+  h1 {
+    font-family: 'Alef', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .dateline {
+    font-family: 'Alef', sans-serif;
+    font-size: 20px;
+    color: var(--ink-soft);
+  }
+  .units-line {
+    font-family: 'Alef', sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+  }
+  .units-line .units-label { font-weight: 700; margin-left: 6px; }
+  .masthead-right {
+    text-align: left;
+    direction: ltr;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .masthead-right .stamp {
+    border: 1px solid var(--rule-soft);
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+
+  /* === KPI CARDS === */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .kpi {
+    padding: 24px 22px;
+    border-left: 1px solid var(--rule-soft);
+    position: relative;
+  }
+  .kpi:last-child { border-left: none; }
+  .kpi-label {
+    font-family: 'Alef', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .kpi-value {
+    font-family: 'Alef', sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .kpi-suffix {
+    font-size: 26px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .kpi.handled .kpi-value { color: var(--good); }
+  .kpi.no-answer .kpi-value { color: var(--bad); }
+  .kpi.pending .kpi-value { color: var(--neutral); }
+
+  /* === SECTIONS === */
+  section { margin-bottom: 56px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+  }
+  .section-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    direction: ltr;
+  }
+  h2 {
+    font-family: 'Alef', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0 0 22px;
+    font-family: 'Alef', sans-serif;
+  }
+
+  /* === TABLES === */
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 17px;
+  }
+  table.data th {
+    text-align: right;
+    font-family: 'Alef', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--rule);
+    background: var(--paper-warm);
+  }
+  table.data td {
+    padding: 14px 14px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  table.data tr:hover td { background: var(--paper-warm); }
+  .unit-name, .staff-name, .topic-name {
+    font-weight: 700;
+    font-family: 'Alef', sans-serif;
+    font-size: 19px;
+  }
+  .unit-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    border: 1px solid var(--rule-soft);
+    padding: 3px 10px;
+    color: var(--ink-soft);
+    background: var(--paper-warm);
+  }
+  .num {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    direction: ltr;
+  }
+  .num.good { color: var(--good); font-weight: 700; }
+  .num.bad { color: var(--bad); font-weight: 700; }
+  .num.neutral { color: var(--neutral); font-weight: 700; }
+  .num.rate {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* === TABLE SEARCH === */
+  .table-search {
+    margin-bottom: 18px;
+  }
+  .table-search input {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: 'Alef', sans-serif;
+    font-size: 17px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+  .table-search input:focus {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(10, 15, 28, 0.08);
+  }
+  .table-search input::placeholder {
+    color: var(--muted);
+  }
+  .search-empty {
+    margin-top: 14px;
+    padding: 18px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 16px;
+    background: var(--paper-warm);
+    border: 1px dashed var(--rule-soft);
+  }
+
+  /* === TOPIC BARS === */
+  .topic-bars { display: flex; flex-direction: column; gap: 8px; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 60px;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+  }
+  .bar-label {
+    font-size: 17px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+  .bar-track {
+    height: 26px;
+    background: var(--paper-warm);
+    border: 1px solid var(--rule-soft);
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        var(--ink),
+        var(--ink) 2px,
+        var(--ink-soft) 2px,
+        var(--ink-soft) 4px
+      );
+    transition: width 0.8s ease;
+  }
+  .bar-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    direction: ltr;
+  }
+
+  /* === CATEGORIES === */
+  .cat-grid { display: flex; flex-direction: column; gap: 10px; }
+  .cat-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 120px;
+    align-items: center;
+    gap: 16px;
+  }
+  .cat-name {
+    font-family: 'Alef', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+  }
+  .cat-bar {
+    height: 10px;
+    background: var(--paper-warm);
+    border-radius: 0;
+    overflow: hidden;
+    border: 1px solid var(--rule-soft);
+  }
+  .cat-fill {
+    height: 100%;
+    background: var(--ink);
+  }
+  .cat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    direction: ltr;
+    text-align: left;
+  }
+  .cat-pct { color: var(--muted); }
+
+  /* === STAFF STACKED BARS === */
+  .subsection-title {
+    font-family: 'Alef', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 36px 0 6px;
+    color: var(--ink);
+  }
+  .subsection-subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 0 0 18px;
+    font-family: 'Alef', sans-serif;
+  }
+  .staff-stacks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .stack-row {
+    display: grid;
+    grid-template-columns: 170px 1fr 50px;
+    align-items: center;
+    gap: 14px;
+  }
+  .stack-name {
+    font-family: 'Alef', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: right;
+  }
+  .stack-bar {
+    display: flex;
+    height: 28px;
+    border: 1px solid var(--rule-soft);
+    background: var(--paper-warm);
+    overflow: hidden;
+  }
+  .stack-bar .seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    transition: width 0.8s ease;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .stack-bar .seg span { white-space: nowrap; }
+  .stack-bar .seg.good { background: var(--good); }
+  .stack-bar .seg.bad { background: var(--bad); }
+  .stack-bar .seg.neutral { background: var(--neutral); }
+  .stack-bar .seg.other { background: var(--muted); }
+  .stack-total {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    direction: ltr;
+    color: var(--ink);
+  }
+
+  /* === MATRIX === */
+  .matrix-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--rule-soft);
+  }
+  table.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  table.matrix th {
+    padding: 10px;
+    background: var(--paper-warm);
+    border-bottom: 2px solid var(--rule);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  table.matrix th.rot {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    height: 130px;
+    padding: 10px 6px;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  table.matrix td {
+    padding: 10px;
+    border-bottom: 1px solid var(--rule-soft);
+    border-left: 1px solid var(--rule-soft);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 17px;
+  }
+  table.matrix td.staff-name {
+    text-align: right;
+    font-family: 'Alef', sans-serif;
+    font-weight: 700;
+    background: var(--paper-warm);
+    font-size: 17px;
+  }
+  td.heat {
+    background: rgba(139, 30, 30, calc(0.15 + var(--intensity, 0) * 0.55));
+    color: white;
+  }
+  td.heat[style*="--intensity:0."] { color: var(--ink); }
+  td.empty-cell { color: var(--rule-soft); }
+
+  /* === LEGEND === */
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-bottom: 8px;
+  }
+  .legend-item {
+    padding: 16px 18px;
+    border-left: 1px solid var(--rule-soft);
+  }
+  .legend-item:last-child { border-left: none; }
+  .legend-label {
+    font-family: 'Alef', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .legend-label.good { color: var(--good); }
+  .legend-label.bad { color: var(--bad); }
+  .legend-label.neutral { color: var(--neutral); }
+  .legend-desc {
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    line-height: 1.45;
+  }
+  .legend-source {
+    font-family: 'Alef', sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+    direction: rtl;
+  }
+
+  /* === EMPTY === */
+  .empty {
+    padding: 32px;
+    text-align: center;
+    color: var(--muted);
+    font-family: 'Alef', sans-serif;
+    font-size: 16px;
+    background: var(--paper-warm);
+    border: 1px dashed var(--rule-soft);
+  }
+
+  /* === FOOTER === */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 3px double var(--rule);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* === PRINT === */
+  @media print {
+    body { background: white; }
+    .container { padding: 20px; max-width: 100%; }
+    section { page-break-inside: avoid; }
+    .kpi-grid { page-break-inside: avoid; }
+    .table-search { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    body { font-size: 17px; }
+    .container { padding: 20px 14px 40px; }
+    h1 { font-size: 30px; }
+    .dateline { font-size: 17px; }
+    h2 { font-size: 24px; }
+    section { margin-bottom: 36px; }
+
+    .masthead { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .masthead-right { text-align: right; }
+
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .kpi { border-top: 1px solid var(--rule-soft); padding: 18px 16px; }
+    .kpi:nth-child(-n+2) { border-top: none; }
+    .kpi-label { font-size: 14px; }
+    .kpi-value { font-size: 42px; }
+    .kpi-suffix { font-size: 18px; }
+
+    .legend-grid { grid-template-columns: repeat(2, 1fr); }
+    .legend-item { border-top: 1px solid var(--rule-soft); padding: 14px 14px; }
+    .legend-item:nth-child(-n+2) { border-top: none; }
+    .legend-label { font-size: 21px; }
+    .legend-desc { font-size: 15px; }
+    .legend-source { font-size: 13px; }
+
+    /* טבלאות נערמות לכרטיסים - כל שורה הופכת לכרטיס עצמאי */
+    table.data thead { display: none; }
+    table.data, table.data tbody { display: block; width: 100%; }
+    table.data tr {
+      display: block;
+      border: 1px solid var(--rule);
+      margin-bottom: 16px;
+      padding: 6px 14px 12px;
+      background: var(--paper);
+    }
+    table.data tr:hover td { background: transparent; }
+    table.data td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px dashed var(--rule-soft);
+      text-align: right;
+      font-size: 17px;
+    }
+    table.data td:last-child { border-bottom: none; }
+    table.data td::before {
+      content: attr(data-label);
+      font-family: 'Alef', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+    /* "כותרת" הכרטיס - שם הגדוד / איש הצוות / נושא */
+    table.data td.unit-name,
+    table.data td.staff-name,
+    table.data td.topic-name {
+      display: block;
+      margin: -6px -14px 10px;
+      padding: 12px 16px;
+      background: var(--paper-warm);
+      border-bottom: 2px solid var(--rule);
+      text-align: right;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    table.data td.unit-name::before,
+    table.data td.staff-name::before,
+    table.data td.topic-name::before { display: none; }
+    .num { text-align: left; font-size: 18px; }
+
+    /* בארים וקטגוריות */
+    .bar-row { grid-template-columns: 130px 1fr 44px; gap: 10px; }
+    .bar-label { font-size: 15px; }
+    .bar-value { font-size: 15px; }
+    .cat-row { grid-template-columns: 110px 1fr 90px; gap: 10px; }
+    .cat-name { font-size: 17px; }
+    .cat-value { font-size: 14px; }
+
+    /* סרגלים מוערמים של אנשי צוות */
+    .stack-row { grid-template-columns: 110px 1fr 40px; gap: 10px; }
+    .stack-name { font-size: 14px; }
+    .stack-bar { height: 30px; }
+    .stack-bar .seg { font-size: 12px; }
+    .subsection-title { font-size: 17px; margin-top: 28px; }
+    .subsection-subtitle { font-size: 13px; }
+
+    /* מטריצה - גלילה אופקית עם רמז ויזואלי */
+    .matrix-wrapper {
+      position: relative;
+      -webkit-overflow-scrolling: touch;
+    }
+    table.matrix { font-size: 14px; }
+    table.matrix th.rot { height: 100px; }
+    table.matrix td { font-size: 15px; }
+
+    footer { font-size: 11px; letter-spacing: 0.1em; }
+  }
+
+  @media (max-width: 420px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .kpi { border-top: 1px solid var(--rule-soft); border-left: none; }
+    .kpi:first-child { border-top: none; }
+    .legend-grid { grid-template-columns: 1fr; }
+    .legend-item { border-left: none; }
+    .legend-item:first-child { border-top: none; }
+    .bar-row { grid-template-columns: 110px 1fr 40px; gap: 8px; }
+    .bar-label { font-size: 14px; }
+    .cat-row { grid-template-columns: 95px 1fr 80px; gap: 8px; }
+    .cat-name { font-size: 16px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="masthead">
+    <div class="masthead-left">
+      <div class="eyebrow">DAILY OPERATIONS REPORT</div>
+      <h1>דוח פעילות יומית - מרכז העורף</h1>
+      <div class="dateline">יום חמישי, 1 בינואר 2026 עד יום חמישי, 4 ביוני 2026</div>
+      <div class="units-line"><span class="units-label">יחידות בדוח:</span>240 · 241</div>
+    </div>
+    <div class="masthead-right">
+      <div>הופק: 04/06/2026 17:02</div>
+    </div>
+  </header>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">סה"כ פניות</div>
+      <div class="kpi-value">395</div>
+    </div>
+    <div class="kpi handled">
+      <div class="kpi-label">טופלו</div>
+      <div class="kpi-value">353<span class="kpi-suffix"> · 89%</span></div>
+    </div>
+    <div class="kpi no-answer">
+      <div class="kpi-label">לא נענו</div>
+      <div class="kpi-value">35</div>
+    </div>
+    <div class="kpi pending">
+      <div class="kpi-label">בהמתנה</div>
+      <div class="kpi-value">6</div>
+    </div>
+  </div>
+
+  <!-- מקרא סטטוסים -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">§ 00</span>
+      <h2>מקרא סטטוסים</h2>
+    </div>
+    <p class="section-subtitle">פירוט המשמעות של כל עמודת סטטוס בטבלאות שלמטה ואילו ערכים מקוריים נכללים בכל קטגוריה</p>
+    <div class="legend-grid">
+        <div class="legend-item">
+          <div class="legend-label good">טופל</div>
+          <div class="legend-desc">פנייה שטופלה והושלמה</div>
+          <div class="legend-source">"טופלה"</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-label bad">לא ענה</div>
+          <div class="legend-desc">לא ניתן היה ליצור קשר</div>
+          <div class="legend-source">"חייל לא זמין" · "אין מספר טלפון"</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-label neutral">ממתין</div>
+          <div class="legend-desc">דורש המשך טיפול בהמשך</div>
+          <div class="legend-source">"חייל ביקש שיחזרו אליו" · "ממתין לטיפול" · "נדרש סיוע של עורך דין"</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-label">אחר</div>
+          <div class="legend-desc">כל סטטוס שלא הוגדר במיפוי</div>
+          <div class="legend-source">ערכים שאינם ברשימה מימין</div>
+        </div></div>
+  </section>
+
+  <!-- פילוח לפי גדוד -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">§ 01</span>
+      <h2>פילוח לפי יחידה</h2>
+    </div>
+    <table class="data">
+      <thead>
+        <tr>
+          <th>יחידה</th>
+          <th>סה"כ</th>
+          <th>טופל</th>
+          <th>לא ענה</th>
+          <th>ממתין</th>
+          <th>אחר</th>
+          <th>אחוז טיפול</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="unit-name" data-label="יחידה">גדוד 240</td>
+          <td class="num" data-label="סה&quot;כ">339</td>
+          <td class="num good" data-label="טופל">299</td>
+          <td class="num bad" data-label="לא ענה">33</td>
+          <td class="num neutral" data-label="ממתין">6</td>
+          <td class="num" data-label="אחר">1</td>
+          <td class="num rate" data-label="אחוז טיפול">88%</td>
+        </tr>
+        <tr>
+          <td class="unit-name" data-label="יחידה">גדוד 241</td>
+          <td class="num" data-label="סה&quot;כ">56</td>
+          <td class="num good" data-label="טופל">54</td>
+          <td class="num bad" data-label="לא ענה">2</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">96%</td>
+        </tr></tbody>
+    </table>
+  </section>
+
+  <!-- פילוח לפי איש צוות -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">§ 02</span>
+      <h2>פילוח לפי איש צוות</h2>
+    </div>
+    <p class="section-subtitle">ממוין לפי כמות פניות, מהגבוה לנמוך</p>
+    <div class="table-search">
+      <input type="search" id="staff-search" placeholder="חיפוש לפי שם איש צוות..." aria-label="חיפוש איש צוות">
+      <div class="search-empty" id="staff-search-empty" hidden>לא נמצא איש צוות מתאים</div>
+    </div>
+    <table class="data" id="staff-table">
+      <thead>
+        <tr>
+          <th>שם</th>
+          <th>יחידה</th>
+          <th>סה"כ</th>
+          <th>טופל</th>
+          <th>לא ענה</th>
+          <th>ממתין</th>
+          <th>אחר</th>
+          <th>אחוז טיפול</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="staff-name" data-label="שם">כוכב</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">59</td>
+          <td class="num good" data-label="טופל">51</td>
+          <td class="num bad" data-label="לא ענה">7</td>
+          <td class="num neutral" data-label="ממתין">1</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">86%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">רוני</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">57</td>
+          <td class="num good" data-label="טופל">54</td>
+          <td class="num bad" data-label="לא ענה">2</td>
+          <td class="num neutral" data-label="ממתין">1</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">95%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">אורנה</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">51</td>
+          <td class="num good" data-label="טופל">44</td>
+          <td class="num bad" data-label="לא ענה">6</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">1</td>
+          <td class="num rate" data-label="אחוז טיפול">86%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">נדב</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">49</td>
+          <td class="num good" data-label="טופל">44</td>
+          <td class="num bad" data-label="לא ענה">4</td>
+          <td class="num neutral" data-label="ממתין">1</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">90%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">מוריאל</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">45</td>
+          <td class="num good" data-label="טופל">42</td>
+          <td class="num bad" data-label="לא ענה">2</td>
+          <td class="num neutral" data-label="ממתין">1</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">93%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">נימרוד</td>
+          <td class="unit-tag" data-label="יחידה">241</td>
+          <td class="num" data-label="סה&quot;כ">39</td>
+          <td class="num good" data-label="טופל">37</td>
+          <td class="num bad" data-label="לא ענה">2</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">95%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">אביתר</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">37</td>
+          <td class="num good" data-label="טופל">32</td>
+          <td class="num bad" data-label="לא ענה">5</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">86%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">איתי</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">33</td>
+          <td class="num good" data-label="טופל">29</td>
+          <td class="num bad" data-label="לא ענה">4</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">88%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">נדב</td>
+          <td class="unit-tag" data-label="יחידה">241</td>
+          <td class="num" data-label="סה&quot;כ">7</td>
+          <td class="num good" data-label="טופל">7</td>
+          <td class="num bad" data-label="לא ענה">0</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">100%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">אורנה אביקזר</td>
+          <td class="unit-tag" data-label="יחידה">241</td>
+          <td class="num" data-label="סה&quot;כ">5</td>
+          <td class="num good" data-label="טופל">5</td>
+          <td class="num bad" data-label="לא ענה">0</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">100%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">איתי רוזן</td>
+          <td class="unit-tag" data-label="יחידה">241</td>
+          <td class="num" data-label="סה&quot;כ">2</td>
+          <td class="num good" data-label="טופל">2</td>
+          <td class="num bad" data-label="לא ענה">0</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">100%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">נימרוד</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">2</td>
+          <td class="num good" data-label="טופל">0</td>
+          <td class="num bad" data-label="לא ענה">1</td>
+          <td class="num neutral" data-label="ממתין">1</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">0%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">אביתר כהן</td>
+          <td class="unit-tag" data-label="יחידה">241</td>
+          <td class="num" data-label="סה&quot;כ">1</td>
+          <td class="num good" data-label="טופל">1</td>
+          <td class="num bad" data-label="לא ענה">0</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">100%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">איתי</td>
+          <td class="unit-tag" data-label="יחידה">241</td>
+          <td class="num" data-label="סה&quot;כ">1</td>
+          <td class="num good" data-label="טופל">1</td>
+          <td class="num bad" data-label="לא ענה">0</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">100%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">מוריאל</td>
+          <td class="unit-tag" data-label="יחידה">241</td>
+          <td class="num" data-label="סה&quot;כ">1</td>
+          <td class="num good" data-label="טופל">1</td>
+          <td class="num bad" data-label="לא ענה">0</td>
+          <td class="num neutral" data-label="ממתין">0</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">100%</td>
+        </tr>
+        <tr>
+          <td class="staff-name" data-label="שם">מוריאל קוט</td>
+          <td class="unit-tag" data-label="יחידה">240</td>
+          <td class="num" data-label="סה&quot;כ">1</td>
+          <td class="num good" data-label="טופל">0</td>
+          <td class="num bad" data-label="לא ענה">0</td>
+          <td class="num neutral" data-label="ממתין">1</td>
+          <td class="num" data-label="אחר">0</td>
+          <td class="num rate" data-label="אחוז טיפול">0%</td>
+        </tr></tbody>
+    </table>
+
+    <h3 class="subsection-title">תצוגה גרפית - חלוקת סטטוסים לכל איש צוות</h3>
+    <p class="subsection-subtitle">כל אורך הסרגל = סה"כ פניות שטיפל. הצבעים מציגים את חלוקת הסטטוסים (ראה מקרא למעלה)</p>
+    <div class="staff-stacks">
+        <div class="stack-row">
+          <div class="stack-name">כוכב</div>
+          <div class="stack-bar"><div class="seg good" style="width:86.44%" title="טופל: 51"><span>51</span></div><div class="seg bad" style="width:11.86%" title="לא ענה: 7"><span>7</span></div><div class="seg neutral" style="width:1.69%" title="ממתין: 1"><span>1</span></div></div>
+          <div class="stack-total">59</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">רוני</div>
+          <div class="stack-bar"><div class="seg good" style="width:94.74%" title="טופל: 54"><span>54</span></div><div class="seg bad" style="width:3.51%" title="לא ענה: 2"><span>2</span></div><div class="seg neutral" style="width:1.75%" title="ממתין: 1"><span>1</span></div></div>
+          <div class="stack-total">57</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">אורנה</div>
+          <div class="stack-bar"><div class="seg good" style="width:86.27%" title="טופל: 44"><span>44</span></div><div class="seg bad" style="width:11.76%" title="לא ענה: 6"><span>6</span></div><div class="seg other" style="width:1.96%" title="אחר: 1"><span>1</span></div></div>
+          <div class="stack-total">51</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">נדב</div>
+          <div class="stack-bar"><div class="seg good" style="width:89.80%" title="טופל: 44"><span>44</span></div><div class="seg bad" style="width:8.16%" title="לא ענה: 4"><span>4</span></div><div class="seg neutral" style="width:2.04%" title="ממתין: 1"><span>1</span></div></div>
+          <div class="stack-total">49</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">מוריאל</div>
+          <div class="stack-bar"><div class="seg good" style="width:93.33%" title="טופל: 42"><span>42</span></div><div class="seg bad" style="width:4.44%" title="לא ענה: 2"><span>2</span></div><div class="seg neutral" style="width:2.22%" title="ממתין: 1"><span>1</span></div></div>
+          <div class="stack-total">45</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">נימרוד</div>
+          <div class="stack-bar"><div class="seg good" style="width:94.87%" title="טופל: 37"><span>37</span></div><div class="seg bad" style="width:5.13%" title="לא ענה: 2"><span>2</span></div></div>
+          <div class="stack-total">39</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">אביתר</div>
+          <div class="stack-bar"><div class="seg good" style="width:86.49%" title="טופל: 32"><span>32</span></div><div class="seg bad" style="width:13.51%" title="לא ענה: 5"><span>5</span></div></div>
+          <div class="stack-total">37</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">איתי</div>
+          <div class="stack-bar"><div class="seg good" style="width:87.88%" title="טופל: 29"><span>29</span></div><div class="seg bad" style="width:12.12%" title="לא ענה: 4"><span>4</span></div></div>
+          <div class="stack-total">33</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">נדב</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 7"><span>7</span></div></div>
+          <div class="stack-total">7</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">אורנה אביקזר</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 5"><span>5</span></div></div>
+          <div class="stack-total">5</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">איתי רוזן</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 2"><span>2</span></div></div>
+          <div class="stack-total">2</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">נימרוד</div>
+          <div class="stack-bar"><div class="seg bad" style="width:50.00%" title="לא ענה: 1"><span>1</span></div><div class="seg neutral" style="width:50.00%" title="ממתין: 1"><span>1</span></div></div>
+          <div class="stack-total">2</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">אביתר כהן</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 1"><span>1</span></div></div>
+          <div class="stack-total">1</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">איתי</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 1"><span>1</span></div></div>
+          <div class="stack-total">1</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">מוריאל</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 1"><span>1</span></div></div>
+          <div class="stack-total">1</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">מוריאל קוט</div>
+          <div class="stack-bar"><div class="seg neutral" style="width:100.00%" title="ממתין: 1"><span>1</span></div></div>
+          <div class="stack-total">1</div>
+        </div></div>
+  </section>
+
+  <!-- נושאים -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">§ 03</span>
+      <h2>נושאי פנייה - TOP 15</h2>
+    </div>
+    <p class="section-subtitle">סופרים פניות בהן הנושא סומן כ"נדרש" או "הגיש כבר"</p>
+    <div class="topic-bars">
+            <div class="bar-row">
+              <div class="bar-label">טיפולים זוגיים</div>
+              <div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div>
+              <div class="bar-value">113</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">פייטר</div>
+              <div class="bar-track"><div class="bar-fill" style="width:85.84070796460178%"></div></div>
+              <div class="bar-value">97</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">תיקונים בבית</div>
+              <div class="bar-track"><div class="bar-fill" style="width:55.75221238938053%"></div></div>
+              <div class="bar-value">63</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">שוברי נופש</div>
+              <div class="bar-track"><div class="bar-fill" style="width:53.98230088495575%"></div></div>
+              <div class="bar-value">61</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">קייטנות קיץ</div>
+              <div class="bar-track"><div class="bar-fill" style="width:26.548672566371685%"></div></div>
+              <div class="bar-value">30</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">מענק לידה</div>
+              <div class="bar-track"><div class="bar-fill" style="width:15.04424778761062%"></div></div>
+              <div class="bar-value">17</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">מס הכנסה</div>
+              <div class="bar-track"><div class="bar-fill" style="width:4.424778761061947%"></div></div>
+              <div class="bar-value">5</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">ייעוץ משפטי</div>
+              <div class="bar-track"><div class="bar-fill" style="width:1.7699115044247788%"></div></div>
+              <div class="bar-value">2</div>
+            </div></div>
+
+    <h3 class="subsection-title">חלוקת סטטוסים לפי נושא</h3>
+    <p class="subsection-subtitle">לכל נושא - כמה מהפניות נסגרו, כמה ממתינות, וכמה לא נענו (ראה מקרא למעלה)</p>
+    <div class="staff-stacks">
+        <div class="stack-row">
+          <div class="stack-name">טיפולים זוגיים</div>
+          <div class="stack-bar"><div class="seg good" style="width:98.23%" title="טופל: 111"><span>111</span></div><div class="seg neutral" style="width:1.77%" title="ממתין: 2"><span>2</span></div></div>
+          <div class="stack-total">113</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">פייטר</div>
+          <div class="stack-bar"><div class="seg good" style="width:97.94%" title="טופל: 95"><span>95</span></div><div class="seg neutral" style="width:2.06%" title="ממתין: 2"><span>2</span></div></div>
+          <div class="stack-total">97</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">תיקונים בבית</div>
+          <div class="stack-bar"><div class="seg good" style="width:95.24%" title="טופל: 60"><span>60</span></div><div class="seg bad" style="width:1.59%" title="לא ענה: 1"><span>1</span></div><div class="seg neutral" style="width:3.17%" title="ממתין: 2"><span>2</span></div></div>
+          <div class="stack-total">63</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">שוברי נופש</div>
+          <div class="stack-bar"><div class="seg good" style="width:96.72%" title="טופל: 59"><span>59</span></div><div class="seg neutral" style="width:3.28%" title="ממתין: 2"><span>2</span></div></div>
+          <div class="stack-total">61</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">קייטנות קיץ</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 30"><span>30</span></div></div>
+          <div class="stack-total">30</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">מענק לידה</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 17"><span>17</span></div></div>
+          <div class="stack-total">17</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">מס הכנסה</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 5"><span>5</span></div></div>
+          <div class="stack-total">5</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-name">ייעוץ משפטי</div>
+          <div class="stack-bar"><div class="seg good" style="width:100.00%" title="טופל: 2"><span>2</span></div></div>
+          <div class="stack-total">2</div>
+        </div></div>
+
+    <h3 class="subsection-title">חלוקת נושאים לפי גדוד</h3>
+    <p class="subsection-subtitle">איזה גדוד מטפל בכמה פניות בכל נושא</p>
+    
+    <table class="data">
+      <thead>
+        <tr>
+          <th>נושא</th>
+          <th class="num">גדוד 240</th><th class="num">גדוד 241</th>
+          <th class="num">סה"כ</th>
+        </tr>
+      </thead>
+      <tbody><tr><td class="topic-name" data-label="נושא">טיפולים זוגיים</td><td class="num" data-label="גדוד 240">101</td><td class="num" data-label="גדוד 241">12</td><td class="num rate" data-label="סה&quot;כ">113</td></tr><tr><td class="topic-name" data-label="נושא">פייטר</td><td class="num" data-label="גדוד 240">95</td><td class="num" data-label="גדוד 241">2</td><td class="num rate" data-label="סה&quot;כ">97</td></tr><tr><td class="topic-name" data-label="נושא">תיקונים בבית</td><td class="num" data-label="גדוד 240">52</td><td class="num" data-label="גדוד 241">11</td><td class="num rate" data-label="סה&quot;כ">63</td></tr><tr><td class="topic-name" data-label="נושא">שוברי נופש</td><td class="num" data-label="גדוד 240">60</td><td class="num" data-label="גדוד 241">1</td><td class="num rate" data-label="סה&quot;כ">61</td></tr><tr><td class="topic-name" data-label="נושא">קייטנות קיץ</td><td class="num" data-label="גדוד 240">28</td><td class="num" data-label="גדוד 241">2</td><td class="num rate" data-label="סה&quot;כ">30</td></tr><tr><td class="topic-name" data-label="נושא">מענק לידה</td><td class="num" data-label="גדוד 240">15</td><td class="num" data-label="גדוד 241">2</td><td class="num rate" data-label="סה&quot;כ">17</td></tr><tr><td class="topic-name" data-label="נושא">מס הכנסה</td><td class="num" data-label="גדוד 240">4</td><td class="num" data-label="גדוד 241">1</td><td class="num rate" data-label="סה&quot;כ">5</td></tr><tr><td class="topic-name" data-label="נושא">ייעוץ משפטי</td><td class="num" data-label="גדוד 240">2</td><td class="num" data-label="גדוד 241">—</td><td class="num rate" data-label="סה&quot;כ">2</td></tr></tbody>
+    </table>
+  </section>
+
+  <!-- קטגוריות -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">§ 04</span>
+      <h2>חלוקה לקטגוריות-על</h2>
+    </div>
+    <div class="cat-grid">
+            <div class="cat-row">
+              <div class="cat-name">רווחה</div>
+              <div class="cat-bar"><div class="cat-fill" style="width:56.95876288659794%"></div></div>
+              <div class="cat-value">221 <span class="cat-pct">(57%)</span></div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">רגשי</div>
+              <div class="cat-bar"><div class="cat-fill" style="width:29.12371134020619%"></div></div>
+              <div class="cat-value">113 <span class="cat-pct">(29%)</span></div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">משפחה</div>
+              <div class="cat-bar"><div class="cat-fill" style="width:12.11340206185567%"></div></div>
+              <div class="cat-value">47 <span class="cat-pct">(12%)</span></div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">זכויות</div>
+              <div class="cat-bar"><div class="cat-fill" style="width:1.804123711340206%"></div></div>
+              <div class="cat-value">7 <span class="cat-pct">(2%)</span></div>
+            </div></div>
+  </section>
+
+  <!-- מטריצה -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">§ 05</span>
+      <h2>מטריצת איש צוות × נושא</h2>
+    </div>
+    <p class="section-subtitle">8 הנושאים המובילים. עוצמת הצבע מייצגת תכיפות</p>
+    <div class="matrix-wrapper">
+        <table class="matrix">
+          <thead>
+            <tr><th>איש צוות</th><th class="rot">טיפולים זוגיים</th><th class="rot">פייטר</th><th class="rot">תיקונים בבית</th><th class="rot">שוברי נופש</th><th class="rot">קייטנות קיץ</th><th class="rot">מענק לידה</th><th class="rot">מס הכנסה</th><th class="rot">ייעוץ משפטי</th></tr>
+          </thead>
+          <tbody><tr><td class="staff-name">אביתר</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:1.0">6</td><td class="heat" style="--intensity:1.0">5</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="empty-cell" style=""></td><td class="heat" style="--intensity:0.3333333333333333">1</td></tr><tr><td class="staff-name">אורנה</td><td class="heat" style="--intensity:1.0">23</td><td class="heat" style="--intensity:1.0">4</td><td class="heat" style="--intensity:1.0">19</td><td class="heat" style="--intensity:1.0">4</td><td class="heat" style="--intensity:1.0">8</td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">אורנה אביקזר</td><td class="heat" style="--intensity:1.0">4</td><td class="empty-cell" style=""></td><td class="heat" style="--intensity:1.0">5</td><td class="empty-cell" style=""></td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">איתי</td><td class="heat" style="--intensity:1.0">11</td><td class="heat" style="--intensity:1.0">9</td><td class="heat" style="--intensity:1.0">4</td><td class="heat" style="--intensity:1.0">7</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">איתי רוזן</td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="empty-cell" style=""></td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">כוכב</td><td class="heat" style="--intensity:1.0">32</td><td class="heat" style="--intensity:1.0">35</td><td class="heat" style="--intensity:1.0">9</td><td class="heat" style="--intensity:1.0">36</td><td class="empty-cell" style=""></td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">מוריאל</td><td class="heat" style="--intensity:1.0">12</td><td class="heat" style="--intensity:1.0">38</td><td class="heat" style="--intensity:1.0">5</td><td class="heat" style="--intensity:1.0">10</td><td class="heat" style="--intensity:1.0">10</td><td class="heat" style="--intensity:1.0">3</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">נדב</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:1.0">3</td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">נימרוד</td><td class="heat" style="--intensity:1.0">5</td><td class="empty-cell" style=""></td><td class="heat" style="--intensity:1.0">6</td><td class="empty-cell" style=""></td><td class="empty-cell" style=""></td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="heat" style="--intensity:0.3333333333333333">1</td><td class="empty-cell" style=""></td></tr><tr><td class="staff-name">רוני</td><td class="heat" style="--intensity:1.0">22</td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="heat" style="--intensity:1.0">7</td><td class="heat" style="--intensity:0.6666666666666666">2</td><td class="heat" style="--intensity:1.0">7</td><td class="heat" style="--intensity:1.0">4</td><td class="heat" style="--intensity:1.0">4</td><td class="heat" style="--intensity:0.3333333333333333">1</td></tr></tbody>
+        </table></div>
+  </section>
+
+  <footer>
+    REPORT GENERATED AUTOMATICALLY · 04/06/2026 17:02 · CONFIDENTIAL
+  </footer>
+
+</div>
+<script>
+  (function () {
+    const input = document.getElementById('staff-search');
+    const table = document.getElementById('staff-table');
+    const empty = document.getElementById('staff-search-empty');
+    if (!input || !table) return;
+
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+    input.addEventListener('input', function () {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      rows.forEach(function (row) {
+        const nameCell = row.querySelector('.staff-name');
+        const name = nameCell ? nameCell.textContent.toLowerCase() : '';
+        const match = !q || name.indexOf(q) !== -1;
+        row.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      empty.hidden = visible > 0 || q.length === 0;
+    });
+  })();
+</script>
+</body>
+</html>
